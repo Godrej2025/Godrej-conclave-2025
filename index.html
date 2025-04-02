@@ -120,31 +120,30 @@
         var loadingBar = document.querySelector("#unity-loading-bar");
         var progressBarFull = document.querySelector("#unity-progress-bar-full");
         function StartAR() {
-            canvas.style.width = window.innerWidth + "px";
-            canvas.style.height = window.innerHeight + "px";
-            document.getElementById("startARDiv").style.display = "none";
-            createUnityInstance(document.querySelector("#unity-canvas"), {
-                dataUrl: "Build/WebBuilds.data",
-                frameworkUrl: "Build/WebBuilds.framework.js",
-                codeUrl: "Build/WebBuilds.wasm",
-                streamingAssetsUrl: "StreamingAssets",
-                companyName: "DefaultCompany",
-                productName: "MarkerBasedAR",
-                productVersion: "0.1",
-                //webglContextAttributes: { "preserveDrawingBuffer": true },
-                // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-                // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-                },
-                (progress) => {
-                    progressBarFull.style.width = 100 * progress + "%";
-                }
-            ).then((unityInstance) => {
-                window.unityInstance = unityInstance;
-                RequestWebcam();
-                loadingBar.style.display = "none";
-            });
-            loadingBar.style.display = "block";
-        }
+    document.body.style.backgroundImage = "none"; // Hide the background image
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+    document.getElementById("startARDiv").style.display = "none";
+    createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/WebBuilds.data",
+        frameworkUrl: "Build/WebBuilds.framework.js",
+        codeUrl: "Build/WebBuilds.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "MarkerBasedAR",
+        productVersion: "0.1",
+    },
+    (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+    }
+    ).then((unityInstance) => {
+        window.unityInstance = unityInstance;
+        RequestWebcam();
+        loadingBar.style.display = "none";
+    });
+    loadingBar.style.display = "block";
+}
+
         //Set Facing Mode here ('environment', 'user', '')
 		window.unityFacingMode = "environment"
         window.WEBCAM_SETTINGS = {
